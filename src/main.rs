@@ -21,7 +21,10 @@ fn main() {
         //Shadowing the variable, that's so interesting! Coz i suffered with that in JS!!
         let guess: u32 = match guess.trim().parse() {
             Ok(num) => num,
-            Err(_) => continue,
+            Err(_) => {
+                println!("You must type a NUMBER!");
+                continue;
+            },
         };
     
         println!("You guessed: {}", guess);
