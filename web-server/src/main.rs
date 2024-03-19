@@ -17,13 +17,19 @@ fn handle_connection(mut stream: TcpStream) {
     let mut buffer = [0; 1024];
     stream.read(&mut buffer).unwrap();
 
-    let get = b"GET / HTTP/1.1\r\n";
+    let home = b"GET / HTTP/1.1\r\n";
+    let products = b"GET /products HTTP/1.1\r\n";
 
-    let (status_line, filename) =
-        if buffer.starts_with(get) {
-            ("HTTP/1.1 200 OK", "index.html")
+    let (status_line, filename) = 
+        //@Routes: GET /
+        if buffer.starts_with(home) {
+            ("HTTP/1.1 200 OK", "./views/index.html")
+        //@Routes: GET /products
+        } else if buffer.starts_with(products) {
+            ("HTTP/1.1 200 OK", "./views/products.html")
+        //@Routes: GET *
         } else {
-            ("HTTP/1.1 400 NOT FOUND", "404.html")
+            ("HTTP/1.1 400 NOT FOUND", "./views/404.html")
         };
 
     let contents = fs::read_to_string(filename).unwrap();
