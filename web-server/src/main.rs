@@ -17,6 +17,7 @@ fn handle_connection(mut stream: TcpStream) {
     let mut buffer = [0; 1024];
     stream.read(&mut buffer).unwrap();
 
+    //@Routes
     let home = b"GET / HTTP/1.1\r\n";
     let products = b"GET /products HTTP/1.1\r\n";
 
